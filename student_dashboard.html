@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Student Dashboard - EduPortal</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    .course-card {
+      border: 1px solid #ccc;
+      border-radius: 10px;
+      padding: 10px;
+      margin: 10px;
+      background-color: #f9f9f9;
+    }
+  </style>
+</head>
+<body>
+  <h2>👨‍🎓 Welcome to Your Student Dashboard</h2>
+  <p id="studentEmail"></p>
+
+  <h3>📘 Available Courses:</h3>
+  <div id="coursesContainer"></div>
+
+  <br>
+  <button onclick="logout()">🚪 Logout</button>
+
+  <script>
+    const role = localStorage.getItem("userRole");
+    const email = localStorage.getItem("userEmail");
+    const container = document.getElementById("coursesContainer");
+    const emailDisplay = document.getElementById("studentEmail");
+
+    // Only allow student to view
+    if (role !== "student") {
+      alert("This page is only for students.");
+      window.location.href = "login.html";
+    }
+
+    emailDisplay.textContent = "Logged in as: " + email;
+
+    // Dummy courses (pretend data)
+    const courses = [
+      {
+        title: "Python Basics",
+        description: "Learn the basics of Python programming with fun exercises and projects."
+      },
+      {
+        title: "Introduction to AI",
+        description: "Discover what Artificial Intelligence is and how it's changing the world."
+      },
+      {
+        title: "Web Development",
+        description: "Build your first website using HTML, CSS, and a bit of JavaScript!"
+      }
+    ];
+
+    // Display each course
+    courses.forEach(course => {
+      const div = document.createElement("div");
+      div.className = "course-card";
+      div.innerHTML = `<h4>${course.title}</h4><p>${course.description}</p>`;
+      container.appendChild(div);
+    });
+
+    function logout() {
+      localStorage.clear();
+      window.location.href = "login.html";
+    }
+  </script>
+</body>
+</html>
