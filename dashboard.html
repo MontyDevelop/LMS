@@ -13,6 +13,7 @@
     const email = localStorage.getItem("userEmail");
     const greeting = document.getElementById("greeting");
     const details = document.getElementById("details");
+    const logoutBtn = document.getElementById("logoutBtn");
 
     if (role === "teacher") {
       greeting.textContent = "Hello Teacher!";
@@ -24,6 +25,11 @@
       greeting.textContent = "Please log in first.";
       details.textContent = "";
     }
+    // Logout button logic
+    logoutBtn.addEventListener("click", function() {
+      localStorage.clear(); // removes all saved data
+      window.location.href = "login.html"; // go back to login
+    });
   </script>
 </body>
 </html>
