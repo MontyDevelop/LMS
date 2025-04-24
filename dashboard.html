@@ -5,31 +5,71 @@
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <h2>Welcome to your Dashboard!</h2>
-  <p>This page will later change based on whether you're a teacher or student.</p>
-
-  <script>
-    const role = localStorage.getItem("userRole");
-    const email = localStorage.getItem("userEmail");
-    const greeting = document.getElementById("greeting");
-    const details = document.getElementById("details");
-    const logoutBtn = document.getElementById("logoutBtn");
-
-    if (role === "teacher") {
-      greeting.textContent = "Hello Teacher!";
-      details.textContent = `You're logged in as ${email}. You can add courses and view students.`;
-    } else if (role === "student") {
-      greeting.textContent = "👨‍🎓 Hello Student!";
-      details.textContent = `You're logged in as ${email}. You can view courses and submit assignments.`;
-    } else {
-      greeting.textContent = "Please log in first.";
-      details.textContent = "";
-    }
-    // Logout button logic
-    logoutBtn.addEventListener("click", function() {
-      localStorage.clear(); // removes all saved data
-      window.location.href = "login.html"; // go back to login
-    });
-  </script>
+    <h2 id="greeting">Loading...</h2>
+    <p id="details"></p>
+  
+    <!-- Course Upload Form (for teachers only) -->
+    <div id="courseSection" style="display:none;">
+      <h3>Upload a Course</h3>
+      <form id="courseForm">
+        <label>Course Title:</label><br>
+        <input type="text" id="courseTitle" required><br><br>
+  
+        <label>Description:</label><br>
+        <textarea id="courseDesc" required></textarea><br><br>
+  
+        <button type="submit">Add Course</button>
+      </form>
+  
+      <h3>Courses You've Added:</h3>
+      <ul id="courseList"></ul>
+    </div>
+  
+    <br>
+    <button id="logoutBtn">Logout</button>
+  
+    <script>
+      const role = localStorage.getItem("userRole");
+      const email = localStorage.getItem("userEmail");
+      const greeting = document.getElementById("greeting");
+      const details = document.getElementById("details");
+      const logoutBtn = document.getElementById("logoutBtn");
+  
+      // Role check and UI update
+      if (role === "teacher") {
+        greeting.textContent = "Hello Teacher!";
+        details.textContent = `You're logged in as ${email}.`;
+        document.getElementById("courseSection").style.display = "block";
+      } else if (role === "student") {
+        greeting.textContent = "👨‍🎓 Hello Student!";
+        details.textContent = `You're logged in as ${email}. This dashboard is only for teachers.`;
+      } else {
+        greeting.textContent = "Please log in first.";
+      }
+  
+      // Logout logic
+      logoutBtn.addEventListener("click", function() {
+        localStorage.clear();
+        window.location.href = "login.html";
+      });
+  
+      // Course form logic
+      const form = document.getElementById("courseForm");
+      const courseList = document.getElementById("courseList");
+  
+      form.addEventListener("submit", function(e) {
+        e.preventDefault();
+        const title = document.getElementById("courseTitle").value;
+        const desc = document.getElementById("courseDesc").value;
+  
+        // Add course to the list (just visually)
+        const li = document.createElement("li");
+        li.innerHTML = `<strong>${title}</strong><br>${desc}`;
+        courseList.appendChild(li);
+  
+        // Clear input fields
+        form.reset();
+      });
+    </script>
 </body>
 </html>
