@@ -1,75 +1,105 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Dashboard - EduPortal</title>
+  <title>Teacher Dashboard - EduPortal</title>
   <link rel="stylesheet" href="style.css">
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+    }
+    #courseSection {
+      margin-top: 20px;
+    }
+    .course-list li {
+      margin-bottom: 10px;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 10px;
+      background-color: #f0f8ff;
+    }
+  </style>
 </head>
 <body>
-    <h2 id="greeting">Loading...</h2>
-    <p id="details"></p>
+  <h2 id="greeting">Welcome</h2>
+  <p id="details"></p>
+
+  <div id="courseSection" style="display: none;">
+    <h3>Add a New Course</h3>
+    <form id="courseForm">
+      <input type="text" id="courseTitle" placeholder="Course Title" required><br><br>
+      <textarea id="courseDesc" placeholder="Course Description" required></textarea><br><br>
+      <button type="submit">Add Course</button>
+    </form>
+
+    <h3>Your Courses</h3>
+    <ul id="courseList" class="course-list"></ul>
+  </div>
+
+  <br><br>
+  <button id="logoutBtn">Logout</button>
+
+  <script>
+    const role = localStorage.getItem("userRole");
+    const email = localStorage.getItem("userEmail");
   
-    <!-- Course Upload Form (for teachers only) -->
-    <div id="courseSection" style="display:none;">
-      <h3>Upload a Course</h3>
-      <form id="courseForm">
-        <label>Course Title:</label><br>
-        <input type="text" id="courseTitle" required><br><br>
+    const greeting = document.getElementById("greeting");
+    const details = document.getElementById("details");
+    const logoutBtn = document.getElementById("logoutBtn");
   
-        <label>Description:</label><br>
-        <textarea id="courseDesc" required></textarea><br><br>
+    const form = document.getElementById("courseForm");
+    const courseList = document.getElementById("courseList"); // move this up here!
   
-        <button type="submit">Add Course</button>
-      </form>
+    function showCourses() {
+      const courses = JSON.parse(localStorage.getItem("courses") || "[]");
+      courseList.innerHTML = "";
   
-      <h3>Courses You've Added:</h3>
-      <ul id="courseList"></ul>
-    </div>
+      courses
+        .filter(course => course.uploadedBy === email)
+        .forEach(course => {
+          const li = document.createElement("li");
+          li.innerHTML = `<strong>${course.title}</strong><br>${course.description}`;
+          courseList.appendChild(li);
+        });
+    }
   
-    <br>
-    <button id="logoutBtn">Logout</button>
+    if (role === "teacher") {
+      greeting.textContent = "Hello Teacher!";
+      details.textContent = `You're logged in as ${email}.`;
+      document.getElementById("courseSection").style.display = "block";
+      showCourses(); // only now we call this
+    } else {
+      greeting.textContent = "Access Denied";
+      details.textContent = "You are not authorized to view this page.";
+      document.getElementById("courseSection").style.display = "none";
+    }
   
-    <script>
-      const role = localStorage.getItem("userRole");
-      const email = localStorage.getItem("userEmail");
-      const greeting = document.getElementById("greeting");
-      const details = document.getElementById("details");
-      const logoutBtn = document.getElementById("logoutBtn");
+    logoutBtn.addEventListener("click", () => {
+      localStorage.clear();
+      window.location.href = "login.html";
+    });
   
-      // Role check and UI update
-      if (role === "teacher") {
-        greeting.textContent = "Hello Teacher!";
-        details.textContent = `You're logged in as ${email}.`;
-        document.getElementById("courseSection").style.display = "block";
-      } else if (role === "student") {
-        greeting.textContent = "👨‍🎓 Hello Student!";
-        details.textContent = `You're logged in as ${email}. This dashboard is only for teachers.`;
-      } else {
-        greeting.textContent = "Please log in first.";
-      }
+    form.addEventListener("submit", function (e) {
+      e.preventDefault();
+      const title = document.getElementById("courseTitle").value.trim();
+      const desc = document.getElementById("courseDesc").value.trim();
   
-      // Logout logic
-      logoutBtn.addEventListener("click", function() {
-        localStorage.clear();
-        window.location.href = "login.html";
-      });
+      if (!title || !desc) return alert("Please enter both title and description.");
   
-      // Course form logic
-      const form = document.getElementById("courseForm");
-      const courseList = document.getElementById("courseList");
+      const newCourse = {
+        title: title,
+        description: desc,
+        uploadedBy: email
+      };
   
-      form.addEventListener("submit", function(e) {
-        e.preventDefault();
-        const title = document.getElementById("courseTitle").value;
-        const desc = document.getElementById("courseDesc").value;
+      let courses = JSON.parse(localStorage.getItem("courses") || "[]");
+      courses.push(newCourse);
+      localStorage.setItem("courses", JSON.stringify(courses));
   
-        // Add course to the list (just visually)
-        const li = document.createElement("li");
-        li.innerHTML = `<strong>${title}</strong><br>${desc}`;
-        courseList.appendChild(li);
+      form.reset();
+      showCourses(); // refresh
+    });
+  </script>
   
-        // Clear input fields
-        form.reset();
-      });
-    </script>
 </body>
 </html>

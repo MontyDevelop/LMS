@@ -24,21 +24,24 @@
 
   <script>
     const form = document.getElementById("loginForm");
-
-    form.addEventListener("submit", function(event) {
-      event.preventDefault(); // stop form from refreshing page
-
+  
+    form.addEventListener("submit", function (e) {
+      e.preventDefault();
       const email = document.getElementById("email").value;
-      const password = document.getElementById("password").value;
       const role = document.getElementById("role").value;
-
-      // Save role in localStorage (like a memory box in the browser)
-      localStorage.setItem("userRole", role);
+  
       localStorage.setItem("userEmail", email);
-
-      // Go to dashboard
-      window.location.href = "dashboard.html";
+      localStorage.setItem("userRole", role);
+  
+      if (role === "teacher") {
+        window.location.href = "dashboard.html";
+      } else if (role === "student") {
+        window.location.href = "student_dashboard.html";
+      } else {
+        alert("Please select a valid role.");
+      }
     });
   </script>
+  
 </body>
 </html>
