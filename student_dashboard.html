@@ -32,6 +32,12 @@
 
   <script>
     const studentEmail = localStorage.getItem("userEmail");
+    const role = localStorage.getItem("userRole");
+    if (role !== "student") {
+      alert("Access denied. Redirecting to login.");
+      window.location.href = "login.html";
+    }
+
     document.getElementById("studentEmail").textContent = "Logged in as: " + studentEmail;
 
     const allCoursesDiv = document.getElementById("allCourses");
@@ -47,6 +53,7 @@
         courseDiv.className = "course";
         courseDiv.innerHTML = `
           <strong>${course.title}</strong><br>${course.description}<br>
+          <em>Created by: ${course.createdBy}</em><br>
           <button onclick="enroll(${index})">Enroll</button>
         `;
         allCoursesDiv.appendChild(courseDiv);
@@ -66,7 +73,7 @@
       const selected = allCourses[index];
       const alreadyEnrolled = enrolled.some(c => c.title === selected.title);
       if (alreadyEnrolled) {
-        alert("You are already enrolled in this course.");
+        alert("Already enrolled!");
         return;
       }
       enrolled.push(selected);
@@ -75,8 +82,10 @@
     }
 
     function logout() {
-      localStorage.clear();
-      window.location.href = "login.html";
+        localStorage.removeItem("userEmail");
+        localStorage.removeItem("userRole");
+        window.location.href = "login.html";
+
     }
 
     showCourses();
