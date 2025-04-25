@@ -64,7 +64,10 @@
       enrolledList.innerHTML = "";
       enrolled.forEach(course => {
         const li = document.createElement("li");
-        li.innerHTML = `<strong>${course.title}</strong> - ${course.description}`;
+        li.innerHTML = `
+        <strong>${course.title}</strong> - ${course.description}
+        <button onclick="unenroll('${course.title}')">Unenroll</button>
+      `;
         enrolledList.appendChild(li);
       });
     }
@@ -78,6 +81,14 @@
       }
       enrolled.push(selected);
       localStorage.setItem("enrolled_" + studentEmail, JSON.stringify(enrolled));
+      showEnrolledCourses();
+    }
+    
+    function unenroll(title) {
+      const updatedEnrolled = enrolled.filter(course => course.title !== title);
+      localStorage.setItem("enrolled_" + studentEmail, JSON.stringify(updatedEnrolled));
+      enrolled.length = 0;
+      updatedEnrolled.forEach(c => enrolled.push(c));
       showEnrolledCourses();
     }
 
