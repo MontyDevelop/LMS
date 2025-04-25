@@ -38,6 +38,9 @@
       <label>Material Link (ZIP/PDF/Video download):</label><br>
       <input type="url" id="courseFile"><br><br>
 
+      <label>Live Class Date & Time:</label><br>
+      <input type="datetime-local" id="courseTime"><br><br>
+
 
       <button type="submit">Add Course</button>
     </form>
@@ -132,6 +135,7 @@
       const pdf = document.getElementById("coursePDF")?.value.trim() || "";
 
       const file = document.getElementById("courseFile").value.trim();
+      const time = document.getElementById("courseTime").value.trim();
 
       const newCourse = {
         title,
@@ -139,6 +143,7 @@
         video,
         pdf,
         file,
+        time,
         createdBy: email
       };
 

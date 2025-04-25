@@ -48,9 +48,14 @@
             ${courseData.file ? `
                 <p><strong>Downloadable Material:</strong></p>
                 <a href="${courseData.file}" target="_blank" download>
-                <button>⬇️ Download File</button>
+                <button>Download File</button>
                 </a>
             ` : ''}
+
+            ${courseData.time ? `
+            <p><strong>Live Class Time:</strong> ${new Date(courseData.time).toLocaleString()}</p>
+            ` : ''}
+
             `;
 
         }
