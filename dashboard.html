@@ -35,6 +35,10 @@
       <label>PDF URL (Google Drive, direct link):</label><br>
       <input type="url" id="coursePDF"><br><br>
 
+      <label>Material Link (ZIP/PDF/Video download):</label><br>
+      <input type="url" id="courseFile"><br><br>
+
+
       <button type="submit">Add Course</button>
     </form>
 
@@ -127,12 +131,15 @@
       const video = document.getElementById("courseVideo")?.value.trim() || "";
       const pdf = document.getElementById("coursePDF")?.value.trim() || "";
 
+      const file = document.getElementById("courseFile").value.trim();
+
       const newCourse = {
-        title: title,
+        title,
         description: desc,
-        createdBy: email,
-        video: video,
-        pdf: pdf
+        video,
+        pdf,
+        file,
+        createdBy: email
       };
 
       let courses = JSON.parse(localStorage.getItem("courses") || "[]");
