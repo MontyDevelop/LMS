@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Course Details</title>
+  <style>
+    body {
+      font-family: Arial;
+      padding: 20px;
+    }
+    .card {
+      border: 1px solid #ccc;
+      border-radius: 10px;
+      padding: 20px;
+      background-color: #f9f9f9;
+    }
+  </style>
+</head>
+<body>
+  <h2>📘 Course Details</h2>
+  <div class="card" id="courseDetails">Loading...</div>
+  <br>
+  <a href="student_dashboard.html">⬅️ Back to Dashboard</a>
+
+  <script>
+    const courseData = JSON.parse(localStorage.getItem("selectedCourse"));
+
+    if (!courseData) {
+      document.getElementById("courseDetails").innerText = "No course data found.";
+    } else {
+      document.getElementById("courseDetails").innerHTML = `
+        <h3>${courseData.title}</h3>
+        <p><strong>Description:</strong> ${courseData.description}</p>
+        <p><strong>Created by:</strong> ${courseData.createdBy}</p>
+      `;
+    }
+  </script>
+</body>
+</html>
