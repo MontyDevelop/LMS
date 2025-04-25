@@ -64,7 +64,11 @@
         .filter(course => course.createdBy === email)
         .forEach(course => {
           const li = document.createElement("li");
-          li.innerHTML = `<strong>${course.title}</strong><br>${course.description}`;
+          li.innerHTML = `
+            <strong>${course.title}</strong><br>${course.description}<br>
+            <button onclick="editCourse(${index})">✏️ Edit</button>
+            <button onclick="deleteCourse(${index})">🗑️ Delete</button>
+          `;
           courseList.appendChild(li);
         });
     }
@@ -86,6 +90,31 @@
 
     });
 
+    let editingIndex = null;
+
+    function editCourse(index) {
+      const courses = JSON.parse(localStorage.getItem("courses") || "[]");
+      const course = courses[index];
+
+      // Fill the form with course data
+      document.getElementById("courseTitle").value = course.title;
+      document.getElementById("courseDesc").value = course.description;
+      document.getElementById("courseVideo").value = course.video || '';
+      document.getElementById("coursePDF").value = course.pdf || '';
+
+      editingIndex = index;
+    }
+    
+    function deleteCourse(index) {
+      let courses = JSON.parse(localStorage.getItem("courses") || "[]");
+      if (confirm("Are you sure you want to delete this course?")) {
+        courses.splice(index, 1);
+        localStorage.setItem("courses", JSON.stringify(courses));
+        showCourses();
+      }
+    }
+
+
     form.addEventListener("submit", function (e) {
       e.preventDefault();
       const title = document.getElementById("courseTitle").value.trim();
@@ -104,11 +133,17 @@
         pdf: pdf
       };
 
-
       let courses = JSON.parse(localStorage.getItem("courses") || "[]");
-      courses.push(newCourse);
-      localStorage.setItem("courses", JSON.stringify(courses));
 
+      if (editingIndex !== null) {
+        // Update existing course
+        courses[editingIndex] = newCourse;
+        editingIndex = null;
+      } else {
+        // Add new course
+        courses.push(newCourse);
+      }
+      localStorage.setItem("courses", JSON.stringify(courses));
       form.reset();
       showCourses();
     });
