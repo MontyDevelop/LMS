@@ -28,6 +28,13 @@
     <form id="courseForm">
       <input type="text" id="courseTitle" placeholder="Course Title" required><br><br>
       <textarea id="courseDesc" placeholder="Course Description" required></textarea><br><br>
+
+      <label>Video URL (YouTube or MP4 link):</label><br>
+      <input type="url" id="courseVideo"><br><br>
+
+      <label>PDF URL (Google Drive, direct link):</label><br>
+      <input type="url" id="coursePDF"><br><br>
+
       <button type="submit">Add Course</button>
     </form>
 
@@ -86,11 +93,17 @@
 
       if (!title || !desc) return alert("Please enter both title and description.");
 
+      const video = document.getElementById("courseVideo").value.trim();
+      const pdf = document.getElementById("coursePDF").value.trim();
+
       const newCourse = {
         title: title,
         description: desc,
-        createdBy: email
+        createdBy: email,
+        video: video,
+        pdf: pdf
       };
+
 
       let courses = JSON.parse(localStorage.getItem("courses") || "[]");
       courses.push(newCourse);
