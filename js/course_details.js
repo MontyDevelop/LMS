@@ -1,0 +1,82 @@
+const courseData = JSON.parse(localStorage.getItem("selectedCourse"));
+
+    if (!courseData) {
+      document.getElementById("courseDetails").innerText = "No course data found.";
+    } else {
+      document.getElementById("courseDetails").innerHTML = `
+            <h3>${courseData.title}</h3>
+            <p><strong>Description:</strong> ${courseData.description}</p>
+            <p><strong>Created by:</strong> ${courseData.createdBy}</p>
+
+            ${courseData.video ? `
+                <p><strong>Video:</strong></p>
+                <video width="100%" height="300" controls>
+                <source src="${courseData.video}" type="video/mp4">
+                Your browser does not support the video tag.
+                </video>
+            ` : ''}
+
+            ${courseData.pdf ? `
+                <p><strong>PDF:</strong></p>
+                <iframe src="${courseData.pdf}" width="100%" height="500px"></iframe>
+            ` : ''}
+
+            ${courseData.file ? `
+                <p><strong>Downloadable Material:</strong></p>
+                <a href="${courseData.file}" target="_blank" download>
+                <button>Download File</button>
+                </a>
+            ` : ''}
+
+            ${courseData.time ? `
+            <p><strong>Live Class Time:</strong> ${new Date(courseData.time).toLocaleString()}</p>
+            ` : ''}
+
+            `;
+
+    }
+    function submitFeedback() {
+      const rating = document.getElementById("rating").value;
+      const comment = document.getElementById("comment").value;
+
+      if (!rating && !comment) {
+        alert("Please add a rating or comment before submitting!");
+        return;
+      }
+
+      const feedback = JSON.parse(localStorage.getItem("feedback_" + courseData.title)) || [];
+
+      feedback.push({
+        student: localStorage.getItem("userEmail"),
+        rating,
+        comment
+      });
+
+      localStorage.setItem("feedback_" + courseData.title, JSON.stringify(feedback));
+
+      alert("Thank you for your feedback!");
+      showFeedback();
+    }
+
+    // Display feedback
+    function showFeedback() {
+      const feedbacks = JSON.parse(localStorage.getItem("feedback_" + courseData.title)) || [];
+      const feedbackSection = document.getElementById("feedbackSection");
+
+      feedbackSection.innerHTML = "<h3>Feedback:</h3>";
+
+      let totalRating = 0;
+      let count = 0;
+
+      feedbacks.forEach(f => {
+        feedbackSection.innerHTML += `
+      <p>⭐ ${f.rating || "No Rating"} - "${f.comment || "No Comment"}" by ${f.student}</p>
+    `;
+      });
+      if (count > 0) {
+        const avg = (totalRating / count).toFixed(1);
+        feedbackSection.innerHTML = `<h4>🌟 Average Rating: ${avg} / 5</h4>` + feedbackSection.innerHTML;
+      }
+    }
+
+    showFeedback(); // Load existing feedbacks when page loads

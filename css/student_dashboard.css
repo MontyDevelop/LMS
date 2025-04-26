@@ -1,0 +1,15 @@
+body {
+    font-family: Arial;
+    padding: 20px;
+  }
+
+  .course {
+    border: 1px solid #ccc;
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 8px;
+  }
+
+  button {
+    margin-top: 5px;
+  }

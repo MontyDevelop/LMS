@@ -1,0 +1,14 @@
+body {
+    font-family: Arial, sans-serif;
+    padding: 20px;
+  }
+  #courseSection {
+    margin-top: 20px;
+  }
+  .course-list li {
+    margin-bottom: 10px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    background-color: #f0f8ff;
+  }
