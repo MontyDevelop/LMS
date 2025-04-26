@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html>
+
 <head>
   <title>Student Dashboard</title>
   <style>
@@ -7,17 +8,20 @@
       font-family: Arial;
       padding: 20px;
     }
+
     .course {
       border: 1px solid #ccc;
       padding: 10px;
       margin-bottom: 10px;
       border-radius: 8px;
     }
+
     button {
       margin-top: 5px;
     }
   </style>
 </head>
+
 <body>
   <h2>🎓 Welcome, Student</h2>
   <p id="studentEmail"></p>
@@ -63,11 +67,13 @@
 
     function showEnrolledCourses() {
       enrolledList.innerHTML = "";
-      enrolled.forEach(course => {
+      enrolled.forEach((course, index) => {
         const li = document.createElement("li");
+        const status = course.completed ? "✅ Completed" : "❌ Not Completed";
         li.innerHTML = `
-        <strong>${course.title}</strong> - ${course.description}
-        <button onclick="unenroll('${course.title}')">Unenroll</button>
+        <strong>${course.title}</strong> - ${course.description} <br>
+        Status: ${status}
+        <button onclick="toggleComplete(${index})">${course.completed ? "Mark Incomplete" : "Mark Completed"}</button>
       `;
         enrolledList.appendChild(li);
       });
@@ -98,16 +104,21 @@
       window.location.href = "course_details.html";
     }
 
-
-    function logout() {
-        localStorage.removeItem("userEmail");
-        localStorage.removeItem("userRole");
-        window.location.href = "login.html";
-
+    function toggleComplete(index) {
+      enrolled[index].completed = !enrolled[index].completed;
+      localStorage.setItem("enrolled_" + studentEmail, JSON.stringify(enrolled));
+      showEnrolledCourses();
     }
 
+    function logout() {
+      localStorage.removeItem("userEmail");
+      localStorage.removeItem("userRole");
+      window.location.href = "login.html";
+    }
+    
     showCourses();
     showEnrolledCourses();
   </script>
 </body>
+
 </html>

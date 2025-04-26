@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html>
+
 <head>
   <title>Course Details</title>
   <style>
@@ -7,6 +8,7 @@
       font-family: Arial;
       padding: 20px;
     }
+
     .card {
       border: 1px solid #ccc;
       border-radius: 10px;
@@ -15,19 +17,36 @@
     }
   </style>
 </head>
+
 <body>
   <h2>📘 Course Details</h2>
   <div class="card" id="courseDetails">Loading...</div>
   <br>
+  <h3>Leave a Rating or Comment:</h3>
+  <select id="rating">
+    <option value="">Select Rating</option>
+    <option value="1">⭐</option>
+    <option value="2">⭐⭐</option>
+    <option value="3">⭐⭐⭐</option>
+    <option value="4">⭐⭐⭐⭐</option>
+    <option value="5">⭐⭐⭐⭐⭐</option>
+  </select><br><br>
+
+  <textarea id="comment" placeholder="Write a comment..." rows="4" cols="50"></textarea><br><br>
+
+  <button onclick="submitFeedback()">Submit Feedback</button>
+
+  <div id="feedbackSection"></div>
+
   <a href="student_dashboard.html">⬅️ Back to Dashboard</a>
 
   <script>
     const courseData = JSON.parse(localStorage.getItem("selectedCourse"));
 
     if (!courseData) {
-        document.getElementById("courseDetails").innerText = "No course data found.";
-        } else {
-            document.getElementById("courseDetails").innerHTML = `
+      document.getElementById("courseDetails").innerText = "No course data found.";
+    } else {
+      document.getElementById("courseDetails").innerHTML = `
             <h3>${courseData.title}</h3>
             <p><strong>Description:</strong> ${courseData.description}</p>
             <p><strong>Created by:</strong> ${courseData.createdBy}</p>
@@ -58,7 +77,46 @@
 
             `;
 
-        }
+    }
+    function submitFeedback() {
+      const rating = document.getElementById("rating").value;
+      const comment = document.getElementById("comment").value;
+
+      if (!rating && !comment) {
+        alert("Please add a rating or comment before submitting!");
+        return;
+      }
+
+      const feedback = JSON.parse(localStorage.getItem("feedback_" + courseData.title)) || [];
+
+      feedback.push({
+        student: localStorage.getItem("userEmail"),
+        rating,
+        comment
+      });
+
+      localStorage.setItem("feedback_" + courseData.title, JSON.stringify(feedback));
+
+      alert("Thank you for your feedback!");
+      showFeedback();
+    }
+
+    // Display feedback
+    function showFeedback() {
+      const feedbacks = JSON.parse(localStorage.getItem("feedback_" + courseData.title)) || [];
+      const feedbackSection = document.getElementById("feedbackSection");
+
+      feedbackSection.innerHTML = "<h3>Feedback:</h3>";
+      feedbacks.forEach(f => {
+        feedbackSection.innerHTML += `
+      <p>⭐ ${f.rating || "No Rating"} - "${f.comment || "No Comment"}" by ${f.student}</p>
+    `;
+      });
+    }
+
+    showFeedback(); // Load existing feedbacks when page loads
+
   </script>
 </body>
+
 </html>
