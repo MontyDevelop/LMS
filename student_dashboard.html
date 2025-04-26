@@ -74,6 +74,7 @@
         <strong>${course.title}</strong> - ${course.description} <br>
         Status: ${status}
         <button onclick="toggleComplete(${index})">${course.completed ? "Mark Incomplete" : "Mark Completed"}</button>
+        ${course.completed ? `<button onclick="downloadCertificate('${course.title}')">🎓 Download Certificate</button>` : ""}
       `;
         enrolledList.appendChild(li);
       });
@@ -109,13 +110,37 @@
       localStorage.setItem("enrolled_" + studentEmail, JSON.stringify(enrolled));
       showEnrolledCourses();
     }
+    
+    function downloadCertificate(courseTitle) {
+      const studentName = studentEmail.split("@")[0]; // You can also ask for full name
+      const date = new Date().toLocaleDateString();
+
+      const certText = `
+    CERTIFICATE OF COMPLETION
+
+    This certifies that
+    ${studentName}
+
+    has successfully completed the course
+    "${courseTitle}"
+
+    Date: ${date}
+  `;
+
+      const blob = new Blob([certText], { type: "text/plain" });
+      const link = document.createElement("a");
+      link.href = URL.createObjectURL(blob);
+      link.download = `${courseTitle}_Certificate.txt`;
+      link.click();
+    }
+
 
     function logout() {
       localStorage.removeItem("userEmail");
       localStorage.removeItem("userRole");
       window.location.href = "login.html";
     }
-    
+
     showCourses();
     showEnrolledCourses();
   </script>

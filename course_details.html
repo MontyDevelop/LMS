@@ -107,11 +107,19 @@
       const feedbackSection = document.getElementById("feedbackSection");
 
       feedbackSection.innerHTML = "<h3>Feedback:</h3>";
+
+      let totalRating = 0;
+      let count = 0;
+
       feedbacks.forEach(f => {
         feedbackSection.innerHTML += `
       <p>⭐ ${f.rating || "No Rating"} - "${f.comment || "No Comment"}" by ${f.student}</p>
     `;
       });
+      if (count > 0) {
+        const avg = (totalRating / count).toFixed(1);
+        feedbackSection.innerHTML = `<h4>🌟 Average Rating: ${avg} / 5</h4>` + feedbackSection.innerHTML;
+      }
     }
 
     showFeedback(); // Load existing feedbacks when page loads
