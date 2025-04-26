@@ -27,7 +27,7 @@
 </head>
 <body>
 
-  <h2>All Users</h2>
+  <h2>👤 All Users</h2>
   <table id="userTable">
     <thead>
       <tr>
@@ -38,7 +38,7 @@
     <tbody></tbody>
   </table>
 
-  <h2>All Courses</h2>
+  <h2>📚 All Courses</h2>
   <table id="courseTable">
     <thead>
       <tr>
@@ -66,6 +66,7 @@
       row.innerHTML = `
         <td>${user.email}</td>
         <td>${user.role}</td>
+        <td><button onclick="deleteUser('${user.email}', '${user.role}')">Delete</button></td>
       `;
       userTable.appendChild(row);
     });
@@ -78,9 +79,29 @@
         <td>${course.title}</td>
         <td>${course.createdBy}</td>
         <td>${course.time ? new Date(course.time).toLocaleString() : "N/A"}</td>
+        <button onclick="deleteCourseByTitle('${course.title}')">Delete</button>
       `;
       courseTable.appendChild(row);
     });
+
+    function deleteUser(email, role) {
+      let users = JSON.parse(localStorage.getItem("users")) || [];
+      users = users.filter(user => !(user.email === email && user.role === role));
+      localStorage.setItem("users", JSON.stringify(users));
+      location.reload(); // Refresh page to reflect changes
+    }
+    function deleteCourseByTitle(title) {
+      let courses = JSON.parse(localStorage.getItem("courses") || "[]");
+      const updatedCourses = courses.filter(course => course.title !== title);
+      localStorage.setItem("courses", JSON.stringify(updatedCourses));
+      location.reload();
+    }
+
+    // Initial load — show ALL courses when the page loads
+    renderCourseTable(courses);
+
+
+
   </script>
 </body>
 </html>
