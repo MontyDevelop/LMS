@@ -20,6 +20,7 @@
       margin-top: 5px;
     }
   </style>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.2/html2pdf.bundle.min.js"></script>
 </head>
 
 <body>
@@ -33,6 +34,14 @@
   <ul id="enrolledList"></ul>
 
   <button onclick="logout()">Logout</button>
+  <div id="certificate"
+    style="display:none; padding:30px; text-align:center; border:5px solid #333; width:600px; margin:auto; font-family: Arial;">
+    <h1>🏆 Certificate of Completion</h1>
+    <h2 id="studentName"></h2>
+    <p style="margin:30px 0;">has successfully completed the course</p>
+    <h3 id="courseTitle"></h3>
+    <p>Date: <span id="completionDate"></span></p>
+  </div>
 
   <script>
     const studentEmail = localStorage.getItem("userEmail");
@@ -110,29 +119,31 @@
       localStorage.setItem("enrolled_" + studentEmail, JSON.stringify(enrolled));
       showEnrolledCourses();
     }
-    
+
     function downloadCertificate(courseTitle) {
       const studentName = studentEmail.split("@")[0]; // You can also ask for full name
       const date = new Date().toLocaleDateString();
 
-      const certText = `
-    CERTIFICATE OF COMPLETION
+      document.getElementById("studentName").innerText = studentName;
+      document.getElementById("courseTitle").innerText = courseTitle;
+      document.getElementById("completionDate").innerText = date;
 
-    This certifies that
-    ${studentName}
+      const element = document.getElementById("certificate");
+      element.style.display = "block"; // Show it for printing
 
-    has successfully completed the course
-    "${courseTitle}"
+      const opt = {
+        margin: 1,
+        filename: `${courseTitle}_Certificate.pdf`,
+        image: { type: 'jpeg', quality: 0.98 },
+        html2canvas: { scale: 2 },
+        jsPDF: { unit: 'in', format: 'letter', orientation: 'portrait' }
+      };
 
-    Date: ${date}
-  `;
-
-      const blob = new Blob([certText], { type: "text/plain" });
-      const link = document.createElement("a");
-      link.href = URL.createObjectURL(blob);
-      link.download = `${courseTitle}_Certificate.txt`;
-      link.click();
+      html2pdf().from(element).set(opt).save().then(() => {
+        element.style.display = "none"; // Hide again after download
+      });
     }
+
 
 
     function logout() {
