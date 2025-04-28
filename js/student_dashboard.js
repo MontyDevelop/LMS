@@ -29,6 +29,8 @@ const studentEmail = localStorage.getItem("userEmail");
         allCoursesDiv.appendChild(courseDiv);
       });
     }
+    
+    
 
     function showEnrolledCourses() {
       enrolledList.innerHTML = "";
@@ -44,7 +46,7 @@ const studentEmail = localStorage.getItem("userEmail");
         enrolledList.appendChild(li);
       });
     }
-
+    
     function enroll(index) {
       const selected = allCourses[index];
       const alreadyEnrolled = enrolled.some(c => c.title === selected.title);
@@ -52,10 +54,12 @@ const studentEmail = localStorage.getItem("userEmail");
         alert("Already enrolled!");
         return;
       }
+      
       enrolled.push(selected);
       localStorage.setItem("enrolled_" + studentEmail, JSON.stringify(enrolled));
       showEnrolledCourses();
     }
+    
 
     function unenroll(title) {
       const updatedEnrolled = enrolled.filter(course => course.title !== title);
@@ -69,11 +73,25 @@ const studentEmail = localStorage.getItem("userEmail");
       localStorage.setItem("selectedCourse", JSON.stringify(selected));
       window.location.href = "course_details.html";
     }
+    
 
     function toggleComplete(index) {
       enrolled[index].completed = !enrolled[index].completed;
       localStorage.setItem("enrolled_" + studentEmail, JSON.stringify(enrolled));
       showEnrolledCourses();
+    }
+    function updateProgressBar() {
+      const enrolled = JSON.parse(localStorage.getItem("enrolledCourses")) || [];
+      const completedCourses = enrolled.filter(course => course.completed).length;
+      const totalCourses = enrolled.length;
+    
+      let progressPercent = 0;
+      if (totalCourses > 0) {
+        progressPercent = (completedCourses / totalCourses) * 100;
+      }
+    
+      document.getElementById("progressBar").style.width = `${progressPercent}%`;
+      document.getElementById("progressText").innerText = `You have completed ${completedCourses} out of ${totalCourses} courses (${Math.round(progressPercent)}%)`;
     }
 
     function downloadCertificate(courseTitle) {
@@ -109,6 +127,7 @@ const studentEmail = localStorage.getItem("userEmail");
         element.style.display = "none"; // Hide again after download
       });
     }
+    
 
 
 
@@ -120,3 +139,6 @@ const studentEmail = localStorage.getItem("userEmail");
 
     showCourses();
     showEnrolledCourses();
+    updateProgressBar();
+
+    
