@@ -19,10 +19,12 @@ const studentEmail = localStorage.getItem("userEmail");
         const courseDiv = document.createElement("div");
         courseDiv.className = "course";
         courseDiv.innerHTML = `
+          <div class="course-card">
           <strong>${course.title}</strong><br>${course.description}<br>
           <em>Created by: ${course.createdBy}</em><br>
           <button onclick="enroll(${index})">Enroll</button>
           <button onclick="viewDetails(${index})">View Details</button>
+          </div>
         `;
         allCoursesDiv.appendChild(courseDiv);
       });

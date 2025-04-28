@@ -19,9 +19,13 @@ function showCourses() {
         .forEach((course, index) => {
             const li = document.createElement("li");
             li.innerHTML = `
-            <strong>${course.title}</strong><br>${course.description}<br>
+            <div class="course-card">
+            <h3>${course.title}</h3>
+            <p>${course.description}</p>
+            <em>Created by: ${course.createdBy}</em><br><br>
             <button onclick="editCourse(${index})">Edit</button>
             <button onclick="deleteCourse(${index})">Delete</button>
+            </div>
           `;
             courseList.appendChild(li);
         });

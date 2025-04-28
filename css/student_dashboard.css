@@ -1,5 +1,5 @@
 body {
-    font-family: Arial;
+    font-family: 'Poppins', sans-serif;
     padding: 20px;
   }
 
@@ -13,3 +13,21 @@ body {
   button {
     margin-top: 5px;
   }
+  .course-card {
+    background: #ffffff;
+    border: 1px solid #ddd;
+    border-radius: 12px;
+    padding: 20px;
+    margin: 15px 0;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s;
+  }
+  
+  .course-card:hover {
+    transform: translateY(-5px);
+  }
+  
+  .course-card button {
+    margin: 5px;
+  }
+  
