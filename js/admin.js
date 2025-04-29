@@ -1,6 +1,5 @@
 const users = JSON.parse(localStorage.getItem("users")) || [];
 const courses = JSON.parse(localStorage.getItem("courses")) || [];
-
 const userTable = document.querySelector("#userTable tbody");
 const courseTable = document.querySelector("#courseTable tbody");
 
@@ -12,7 +11,7 @@ function renderUsers(filteredUsers = users) {
         row.innerHTML = `
       <td>${user.email}</td>
       <td>${user.role}</td>
-      <td><button onclick="deleteUser('${user.email}', '${user.role}')">🗑 Delete</button></td>
+      <td><button class="delete" onclick="deleteUser('${user.email}', '${user.role}')">Delete</button></td>
     `;
         userTable.appendChild(row);
     });
@@ -29,7 +28,7 @@ function renderCourses(courseList = courses) {
       <td>${course.createdBy}</td>
       <td>${course.time ? new Date(course.time).toLocaleString() : "N/A"}</td>
       <td>${enrolled.length ? enrolled.join(", ") : "No Enrollments"}</td>
-      <td><button onclick="deleteCourseByTitle('${course.title}')">🗑 Delete</button></td>
+      <td><button class="delete" onclick="deleteCourseByTitle('${course.title}')">Delete</button></td>
     `;
         courseTable.appendChild(row);
     });
@@ -50,6 +49,7 @@ function getEnrolled(courseTitle) {
 
 const teacherFilter = document.getElementById("teacherFilter");
 const teachers = [...new Set(courses.map(c => c.createdBy))];
+
 teachers.forEach(t => {
     const opt = document.createElement("option");
     opt.value = t;

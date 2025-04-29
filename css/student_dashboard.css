@@ -48,31 +48,6 @@ body {
   .hero p {
     font-size: 1.2em;
   }
-  .progress-section {
-    text-align: center;
-    margin: 40px 0;
-  }
   
-  .progress-container {
-    width: 80%;
-    background-color: #ddd;
-    border-radius: 20px;
-    margin: 20px auto;
-    height: 30px;
-    overflow: hidden;
-  }
   
-  .progress-bar {
-    height: 100%;
-    width: 0;
-    background-color: #4CAF50;
-    border-radius: 20px 0 0 20px;
-    transition: width 0.5s;
-  }
-  
-  #progressText {
-    margin-top: 10px;
-    font-size: 18px;
-    color: #333;
-  }
   

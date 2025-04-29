@@ -30,13 +30,11 @@ const studentEmail = localStorage.getItem("userEmail");
       });
     }
     
-    
-
     function showEnrolledCourses() {
       enrolledList.innerHTML = "";
       enrolled.forEach((course, index) => {
         const li = document.createElement("li");
-        const status = course.completed ? "✅ Completed" : "❌ Not Completed";
+        const status = course.completed ? "Completed" : "Not Completed";
         li.innerHTML = `
         <strong>${course.title}</strong> - ${course.description} <br>
         Status: ${status}
@@ -54,44 +52,30 @@ const studentEmail = localStorage.getItem("userEmail");
         alert("Already enrolled!");
         return;
       }
-      
       enrolled.push(selected);
       localStorage.setItem("enrolled_" + studentEmail, JSON.stringify(enrolled));
       showEnrolledCourses();
     }
-    
 
-    function unenroll(title) {
-      const updatedEnrolled = enrolled.filter(course => course.title !== title);
-      localStorage.setItem("enrolled_" + studentEmail, JSON.stringify(updatedEnrolled));
-      enrolled.length = 0;
-      updatedEnrolled.forEach(c => enrolled.push(c));
-      showEnrolledCourses();
-    }
+
+    // function unenroll(title) {
+    //   const updatedEnrolled = enrolled.filter(course => course.title !== title);
+    //   localStorage.setItem("enrolled_" + studentEmail, JSON.stringify(updatedEnrolled));
+    //   enrolled.length = 0;
+    //   updatedEnrolled.forEach(c => enrolled.push(c));
+    //   showEnrolledCourses();
+    // }
+
     function viewDetails(index) {
       const selected = allCourses[index];
       localStorage.setItem("selectedCourse", JSON.stringify(selected));
       window.location.href = "course_details.html";
     }
     
-
     function toggleComplete(index) {
       enrolled[index].completed = !enrolled[index].completed;
       localStorage.setItem("enrolled_" + studentEmail, JSON.stringify(enrolled));
       showEnrolledCourses();
-    }
-    function updateProgressBar() {
-      const enrolled = JSON.parse(localStorage.getItem("enrolledCourses")) || [];
-      const completedCourses = enrolled.filter(course => course.completed).length;
-      const totalCourses = enrolled.length;
-    
-      let progressPercent = 0;
-      if (totalCourses > 0) {
-        progressPercent = (completedCourses / totalCourses) * 100;
-      }
-    
-      document.getElementById("progressBar").style.width = `${progressPercent}%`;
-      document.getElementById("progressText").innerText = `You have completed ${completedCourses} out of ${totalCourses} courses (${Math.round(progressPercent)}%)`;
     }
 
     function downloadCertificate(courseTitle) {
@@ -127,10 +111,7 @@ const studentEmail = localStorage.getItem("userEmail");
         element.style.display = "none"; // Hide again after download
       });
     }
-    
-
-
-
+  
     function logout() {
       localStorage.removeItem("userEmail");
       localStorage.removeItem("userRole");
@@ -139,6 +120,5 @@ const studentEmail = localStorage.getItem("userEmail");
 
     showCourses();
     showEnrolledCourses();
-    updateProgressBar();
 
     
