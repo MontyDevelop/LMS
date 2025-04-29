@@ -3,6 +3,19 @@ const courses = JSON.parse(localStorage.getItem("courses")) || [];
 const userTable = document.querySelector("#userTable tbody");
 const courseTable = document.querySelector("#courseTable tbody");
 
+const role = localStorage.getItem("userRole");
+if (role !== "admin") {
+  alert("Access denied. Admins only.");
+  window.location.href = "login.html";
+}
+
+document.getElementById("logoutBtn").addEventListener("click", function () {
+    localStorage.removeItem("userEmail");
+    localStorage.removeItem("userRole");
+    window.location.href = "login.html";
+  });
+  
+
 // 1. Render All Users
 function renderUsers(filteredUsers = users) {
     userTable.innerHTML = "";
