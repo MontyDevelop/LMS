@@ -5,6 +5,8 @@
   <title>Admin Dashboard</title>
   <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/admin.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 </head>
 
 <body>
@@ -15,7 +17,7 @@
     <h1>Admin Dashboard</h1>
     <p>Manage users, courses, and maintain the platform.</p>
   </section>
-  
+
 
   <label>Filter by Teacher:</label>
   <select id="teacherFilter" onchange="filterCourses()">
@@ -24,27 +26,32 @@
 
 
   <h2>All Users</h2>
-  <table id="userTable">
-    <thead>
-      <tr>
-        <th>Email</th>
-        <th>Role</th>
-      </tr>
-    </thead>
-    <tbody></tbody>
-  </table>
+  <div class="table-container">
+    <table id="userTable">
+      <thead>
+        <tr>
+          <th>Email</th>
+          <th>Role</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+  </div>
 
   <h2>All Courses</h2>
-  <table id="courseTable">
-    <thead>
-      <tr>
-        <th>Title</th>
-        <th>Teacher</th>
-        <th>Date/Time</th>
-      </tr>
-    </thead>
-    <tbody></tbody>
-  </table>
+  <div class="table-container">
+
+    <table id="courseTable">
+      <thead>
+        <tr>
+          <th>Title</th>
+          <th>Teacher</th>
+          <th>Date/Time</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+  </div>
 
   <button id="logoutBtn" class="logout-btn">Logout</button>
   <script src="js/admin.js"></script>

@@ -9,15 +9,16 @@ h2 {
 
 table {
   width: 100%;
+  overflow-x: auto;
+  display: block;
   border-collapse: collapse;
-  margin-bottom: 30px;
 }
 
-th,
-td {
+th, td {
   padding: 10px;
   border: 1px solid #ccc;
   text-align: left;
+  white-space: nowrap; /* Prevent long text from wrapping */
 }
 
 th {
@@ -85,12 +86,12 @@ button:hover {
 }
 
 .hero h1 {
-  font-size: 2.2em;
+  font-size: 1.8em;
   font-weight: 600;
 }
 
 .hero p {
-  font-size: 1.1em;
+  font-size: 1em;
   opacity: 0.95;
 }
 
@@ -111,4 +112,65 @@ button:hover {
 
 .logout-bottom-btn:hover {
   background-color: #1a252f;
+}
+
+table {
+  width: 100%;
+  overflow-x: auto;
+  display: block;
+  border-collapse: collapse;
+}
+
+#courseList {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 20px;
+}
+
+input,
+textarea,
+select,
+button {
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+  font-size: 1em;
+  padding: 8px;
+  margin-bottom: 10px;
+}
+
+@media screen and (max-width: 600px) {
+  .hero h1 {
+    font-size: 1.5em;
+  }
+
+  .logout-bottom-btn {
+    font-size: 12px;
+    padding: 8px 12px;
+  }
+
+  table th, table td {
+    font-size: 13px;
+    padding: 6px;
+  }
+
+  body {
+    padding: 10px;
+  }
+}
+
+.table-container {
+  overflow-x: auto;
+  max-width: 100%;
+}
+
+button.delete-btn {
+  background-color: #e74c3c;
+  color: white;
+  border: none;
+  padding: 6px 10px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 13px;
+  white-space: nowrap; /* Don't let button text wrap */
 }

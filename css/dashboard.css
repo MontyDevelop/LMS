@@ -40,11 +40,56 @@ body {
   }
   
   .hero h1 {
-    font-size: 2.5em;
+    font-size: 1.8em;
     margin-bottom: 10px;
   }
   
   .hero p {
-    font-size: 1.2em;
+    font-size: 1em;
+  }
+  
+  table {
+    width: 100%;
+    overflow-x: auto;
+    display: block;
+    border-collapse: collapse;
+  }
+  
+  #courseList {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 20px;
+  }
+  
+  input,
+  textarea,
+  select,
+  button {
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+    font-size: 1em;
+    padding: 8px;
+    margin-bottom: 10px;
+  }
+
+  @media screen and (max-width: 600px) {
+    .hero h1 {
+      font-size: 1.5em;
+    }
+  
+    .logout-bottom-btn {
+      font-size: 12px;
+      padding: 8px 12px;
+    }
+  
+    table th, table td {
+      font-size: 13px;
+      padding: 6px;
+    }
+  
+    body {
+      padding: 10px;
+    }
   }
   
