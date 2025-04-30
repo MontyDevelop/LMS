@@ -1,21 +1,41 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
   <title>EduPortal</title>
-  <link rel="stylesheet" href="css/style.css">
-  <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet" />
 </head>
-<body>
-  <header>
-    <h1>Welcome to EduPortal</h1>
-    <nav>
-      <a href="login.html">Login</a>
-    </nav>
+
+<body class="bg-gradient-to-r from-indigo-600 via-purple-600 to-blue-600 min-h-screen text-white font-[Poppins]">
+
+  <!-- Navigation Bar -->
+  <nav class="bg-white text-gray-900 p-4 shadow flex justify-between items-center">
+    <h1 class="text-xl font-bold">EduPortal</h1>
+    <div class="space-x-4 text-sm">
+      <a href="login.html" class="hover:text-blue-600">Login</a>
+    </div>
+  </nav>
+
+  <!-- Hero Section -->
+  <header class="text-center mt-16">
+    <h1 class="text-4xl font-bold mb-4">🎓 Welcome to EduPortal</h1>
+    <p class="text-lg opacity-90 max-w-xl mx-auto">A simple and powerful learning platform for students, teachers, and admins to manage and access quality education anytime, anywhere.</p>
   </header>
-  <main>
-    <p>This is a simple learning website for students and teachers.</p>
+
+  <!-- Call to Action -->
+  <main class="bg-white text-gray-900 p-6 rounded-xl shadow-md max-w-md w-full mx-auto mt-10 text-center">
+    <h2 class="text-2xl font-semibold mb-4">Log in to continue</h2>
+    <a href="login.html" class="inline-block bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-full text-lg transition duration-300">
+      🔐 Go to Login
+    </a>
   </main>
+
+  <!-- Footer -->
+  <footer class="mt-20 text-center text-sm text-gray-200">
+    &copy; 2025 EduPortal. All rights reserved.
+  </footer>
+
 </body>
 </html>

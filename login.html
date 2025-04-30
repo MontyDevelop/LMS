@@ -1,33 +1,63 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
   <title>Login - EduPortal</title>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/style.css">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet" />
 </head>
-<body>
-  <h2>Login</h2>
-  <form id="loginForm">
-    <label>Email:</label>
-    <input type="email" id="email" required><br>
-    
-    <label>Password:</label>
-    <input type="password" id="password" required><br>
 
-    <label>Login as:</label>
-    <select id="role">
-      <option value="">Select Role</option>
-      <option value="student">Student</option>
-      <option value="teacher">Teacher</option>
-      <option value="admin">Admin</option>
-    </select><br>
+<body class="bg-gradient-to-br from-purple-700 via-indigo-800 to-blue-800 min-h-screen font-[Poppins] text-white">
 
-    <button type="submit">Login</button>
-  </form>
+  <!-- Navigation -->
+  <nav class="bg-white text-gray-900 p-4 shadow flex justify-between items-center">
+    <h1 class="text-xl font-bold">EduPortal</h1>
+    <div id="nav-links" class="space-x-4 text-sm"></div>
+    <a href="index.html" class="hover:text-blue-600 text-sm">🏠 Home</a>
+  </nav>
+
+  <!-- Login Form -->
+  <div class="flex justify-center items-center min-h-[80vh] px-4">
+    <div class="bg-white text-gray-900 p-8 rounded-xl shadow-lg w-full max-w-md">
+      <h2 class="text-2xl font-bold mb-6 text-center">🔐 Login to EduPortal</h2>
+
+      <form id="loginForm" class="space-y-4">
+        <div>
+          <label for="email" class="block text-sm font-medium mb-1">Email</label>
+          <input type="email" id="email" required class="w-full p-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500" />
+        </div>
+
+        <div>
+          <label for="password" class="block text-sm font-medium mb-1">Password <span class="text-xs text-gray-500">(Admin only)</span></label>
+          <input type="password" id="password" class="w-full p-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500" />
+        </div>
+
+        <div>
+          <label for="role" class="block text-sm font-medium mb-1">Select Role</label>
+          <select id="role" required class="w-full p-2 border border-gray-300 rounded text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500">
+            <option value="">-- Choose Role --</option>
+            <option value="student">Student</option>
+            <option value="teacher">Teacher</option>
+            <option value="admin">Admin</option>
+          </select>
+          <small class="text-xs text-gray-500">Admins require the correct password. Students & teachers don’t.</small>
+        </div>
+
+        <p id="loginError" class="text-red-600 text-sm hidden">Invalid credentials</p>
+
+        <button type="submit" class="w-full bg-blue-600 hover:bg-blue-700 text-white py-2 rounded text-lg transition">
+          Login
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="mt-10 text-center text-sm text-gray-200">
+    &copy; 2025 EduPortal. All rights reserved.
+  </footer>
 
   <script src="js/login.js"></script>
-  
 </body>
 </html>

@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!-- <!DOCTYPE html>
 <html>
 
 <head>
@@ -34,4 +34,82 @@
   <script src="js/course_details.js"></script>
 </body>
 
+</html> -->
+
+<!-- --------------------------------------------------------------------- -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Course Details</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet" />
+</head>
+
+<body class="bg-gradient-to-br from-indigo-600 via-blue-700 to-teal-600 min-h-screen text-white font-[Poppins] p-6">
+  <nav class="bg-white text-gray-900 p-4 shadow">
+    <div class="flex items-center justify-between">
+      <h1 class="text-xl font-bold">EduPortal</h1>
+      
+      <!-- Hamburger Button -->
+      <button id="menuBtn" class="md:hidden focus:outline-none">
+        <div class="space-y-1.5">
+          <span class="block w-6 h-0.5 bg-black transition-transform origin-left duration-300" id="line1"></span>
+          <span class="block w-6 h-0.5 bg-black transition-opacity duration-300" id="line2"></span>
+          <span class="block w-6 h-0.5 bg-black transition-transform origin-left duration-300" id="line3"></span>
+        </div>
+      </button>
+    </div>
+  
+    <!-- Links -->
+    <div id="menuLinks" class="hidden flex-col md:flex md:flex-row md:space-x-6 mt-4 md:mt-0 text-sm transition-all duration-300">
+      <a href="student_dashboard.html" class="py-2 hover:text-blue-600">My Dashboard</a>
+      <a href="course_details.html" class="py-2 hover:text-blue-600">Course Details</a>
+      <a href="login.html" class="py-2 hover:text-red-500">Logout</a>
+    </div>
+  </nav>
+  
+  
+
+  <div class="max-w-3xl mx-auto bg-white text-gray-900 p-6 rounded-lg shadow-lg">
+    <h2 class="text-2xl font-bold mb-4 text-center">Course Details</h2>
+
+    <div id="courseDetails" class="border border-gray-300 p-4 rounded mb-6 bg-gray-100 text-gray-800">
+      Loading...
+    </div>
+
+    <h3 class="text-lg font-semibold mb-2">Leave a Rating or Comment:</h3>
+
+    <select id="rating" class="w-full mb-4 p-2 border rounded text-gray-900">
+      <option value="">Select Rating</option>
+      <option value="1">⭐</option>
+      <option value="2">⭐⭐</option>
+      <option value="3">⭐⭐⭐</option>
+      <option value="4">⭐⭐⭐⭐</option>
+      <option value="5">⭐⭐⭐⭐⭐</option>
+    </select>
+
+    <textarea id="comment" placeholder="Write a comment..." rows="4"
+      class="w-full mb-4 p-2 border rounded resize-none text-gray-900"></textarea>
+
+    <button onclick="submitFeedback()"
+      class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded mb-6">
+      Submit Feedback
+    </button>
+
+    <div id="feedbackSection" class="bg-gray-50 p-4 rounded text-sm text-gray-700"></div>
+
+    <a href="student_dashboard.html"
+      class="inline-block mt-6 text-blue-200 hover:text-white underline transition">Back to Dashboard</a>
+  </div>
+
+  <script src="js/course_details.js"></script>
+
+  <footer class="mt-20 text-center text-sm text-gray-200">
+    &copy; 2025 EduPortal. All rights reserved.
+  </footer>
+  
+</body>
 </html>
